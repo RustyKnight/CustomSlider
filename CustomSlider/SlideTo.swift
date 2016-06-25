@@ -25,25 +25,71 @@ class SlideTo: UISlider {
 		}
 	}
 	
+	@IBInspectable var text: String? {
+		didSet {
+			textLabel.text = text
+			invalidateIntrinsicContentSize()
+			setNeedsLayout()
+			setNeedsDisplay()
+		}
+	}
+	
 	var cgTrackGap: CGFloat {
 		return CGFloat(trackGap)
-	}
-	
-	override init(frame: CGRect) {
-		super.init(frame: frame)
-	}
-	
-	required init?(coder aDecoder: NSCoder) {
-		super.init(coder: aDecoder)
 	}
 	
 	override var bounds: CGRect {
 		didSet {
 			layer.cornerRadius = bounds.height / 2.0
+			textAnchor.constant = -bounds.height / 4.0
 		}
 	}
 	
+	internal let textLabel: UILabel = UILabel()
 	internal var defaultDiameter = 5.0
+	internal var textAnchor: NSLayoutConstraint!
+	
+	override init(frame: CGRect) {
+		super.init(frame: frame)
+		setup()
+	}
+	
+	required init?(coder aDecoder: NSCoder) {
+		super.init(coder: aDecoder)
+		setup()
+	}
+	
+	internal func setup() {
+		textLabel.textColor = UIColor.red()
+		textLabel.translatesAutoresizingMaskIntoConstraints = false
+		addSubview(textLabel)
+		var constraints: [NSLayoutConstraint] = []
+		constraints.append(NSLayoutConstraint(item: textLabel,
+		                                      attribute: .centerY,
+		                                      relatedBy: .equal,
+		                                      toItem: self,
+		                                      attribute: .centerY,
+		                                      multiplier: 1.0,
+		                                      constant: 0.0))
+		
+		textAnchor = NSLayoutConstraint(item: textLabel,
+		                                attribute: .trailing,
+		                                relatedBy: .equal,
+		                                toItem: self,
+		                                attribute: .trailing,
+		                                multiplier: 1.0,
+		                                constant: 0.0)
+		constraints.append(textAnchor)
+		
+		addConstraints(constraints)
+	}
+	
+	override func layoutSubviews() {
+		super.layoutSubviews()
+		bringSubview(toFront: textLabel)
+		let count = subviews.count
+		exchangeSubview(at: count - 1, withSubviewAt: count - 2)
+	}
 	
 	internal func updateThumbImage() {
 		var diameter = CGFloat(defaultDiameter)
@@ -94,6 +140,10 @@ class SlideTo: UISlider {
 			width = max(image.size.width + (cgTrackGap * 2) * 3,
 			            width)
 		}
+		if let _ = text {
+			let textSize = textLabel.intrinsicContentSize()
+			width += textSize.width + (diameter) + (cgTrackGap)
+		}
 		return CGSize(width: width, height: height)
 	}
 	
@@ -112,7 +162,7 @@ class SlideTo: UISlider {
 	override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
 		super.endTracking(touch, with: event)
 		if value < 1.0 {
-			let duration: TimeInterval = Double(value) / 0.5
+			let duration: TimeInterval = Double(value) / 0.25
 			UIView.animate(withDuration: duration, animations: {
 				self.setValue(0.0, animated: true)
 			})

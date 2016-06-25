@@ -25,6 +25,7 @@
                                 <color key="thumbTintColor" red="0.62745098040000002" green="0.83921568629999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="shutdown_filled_50"/>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="text" value="Slide to be awesome"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="valueDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="IDH-zt-CpF"/>
