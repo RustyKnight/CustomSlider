@@ -34,6 +34,27 @@ class SlideTo: UISlider {
 		}
 	}
 	
+	@IBInspectable var textColor: UIColor {
+		get {
+			return textLabel.textColor
+		}
+		set {
+			textLabel.textColor = newValue
+		}
+	}
+	
+	@IBInspectable var textFont: UIFont {
+		get {
+			return textLabel.font
+		}
+		set {
+			textLabel.font = newValue
+			invalidateIntrinsicContentSize()
+			setNeedsLayout()
+			setNeedsDisplay()
+		}
+	}
+	
 	var cgTrackGap: CGFloat {
 		return CGFloat(trackGap)
 	}
@@ -56,6 +77,11 @@ class SlideTo: UISlider {
 	
 	required init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
+		setup()
+	}
+	
+	override func prepareForInterfaceBuilder() {
+		super.prepareForInterfaceBuilder()
 		setup()
 	}
 	
@@ -88,7 +114,9 @@ class SlideTo: UISlider {
 		super.layoutSubviews()
 		bringSubview(toFront: textLabel)
 		let count = subviews.count
-		exchangeSubview(at: count - 1, withSubviewAt: count - 2)
+		for index in stride(from: (count - 1), to: 1, by: -1) {
+			exchangeSubview(at: index, withSubviewAt: index - 1)
+		}
 	}
 	
 	internal func updateThumbImage() {
@@ -162,7 +190,8 @@ class SlideTo: UISlider {
 	override func endTracking(_ touch: UITouch?, with event: UIEvent?) {
 		super.endTracking(touch, with: event)
 		if value < 1.0 {
-			let duration: TimeInterval = Double(value) / 0.25
+			let duration: TimeInterval = Double(value) * 0.5
+			print("\(#function) \(value) ~ \(duration)")
 			UIView.animate(withDuration: duration, animations: {
 				self.setValue(0.0, animated: true)
 			})
