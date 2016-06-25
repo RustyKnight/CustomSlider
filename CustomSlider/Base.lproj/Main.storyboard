@@ -22,6 +22,10 @@
                             <slider opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="KvZ-YT-zyg" customClass="SlideTo" customModule="CustomSlider" customModuleProvider="target">
                                 <color key="minimumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="maximumTrackTintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="thumbTintColor" red="0.62745098040000002" green="0.83921568629999999" blue="0.35294117650000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="image" keyPath="image" value="shutdown_filled_50"/>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="valueDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="IDH-zt-CpF"/>
                                 </connections>
@@ -51,4 +55,7 @@
             </objects>
         </scene>
     </scenes>
+    <resources>
+        <image name="shutdown_filled_50" width="50" height="50"/>
+    </resources>
 </document>
