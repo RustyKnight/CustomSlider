@@ -12,6 +12,7 @@ class SlideTo: UISlider {
 
 	@IBInspectable var trackGap = 8.0 {
 		didSet {
+			updateThumbImage()
 			invalidateIntrinsicContentSize()
 			setNeedsLayout()
 			setNeedsDisplay()
@@ -20,7 +21,7 @@ class SlideTo: UISlider {
 	
 	@IBInspectable var image: UIImage? {
 		didSet {
-			setThumbImage(image, for: [])
+			updateThumbImage()
 		}
 	}
 	
@@ -42,8 +43,49 @@ class SlideTo: UISlider {
 		}
 	}
 	
+	internal var defaultDiameter = 5.0
+	
+	internal func updateThumbImage() {
+		var diameter = CGFloat(defaultDiameter)
+		if let image = image {
+			diameter = max(image.size.width * 1.5,
+			               image.size.height * 1.5)
+		}
+		UIGraphicsBeginImageContextWithOptions(CGSize(width: diameter,
+		                                              height: diameter),
+		                                       false,
+		                                       0.0)
+		let ctx = UIGraphicsGetCurrentContext()
+		print("ctx = \(ctx)")
+		UIColor.white().setFill()
+		let center = diameter / 2.0.cgFloat
+		let path = UIBezierPath(arcCenter: CGPoint(x: center, y: center),
+		                        radius: diameter / 2.0.cgFloat,
+		                        startAngle: 0.0.radians.cgFloat,
+		                        endAngle: 360.0.radians.cgFloat,
+		                        clockwise: false)
+		path.fill()
+		
+		if let image = image {
+			let x = (diameter - (image.size.width)) / 2.0
+			let y = (diameter - (image.size.height)) / 2.0
+			image.draw(in: CGRect(x: x,
+			                      y: y,
+			                      width: image.size.width,
+			                      height: image.size.height))
+		}
+		let thumbImage = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		
+		setThumbImage(thumbImage, for: [])
+		setThumbImage(thumbImage, for: .selected)
+		setThumbImage(thumbImage, for: .focused)
+		setThumbImage(thumbImage, for: .application)
+		setThumbImage(thumbImage, for: .highlighted)
+	}
+	
 	override func intrinsicContentSize() -> CGSize {
-		let diameter = CGFloat(5.0)
+		let diameter = CGFloat(defaultDiameter)
 		var height = diameter + (cgTrackGap * 2.0)
 		var width = diameter * 3 + (cgTrackGap * 2.0)
 		if let image = currentThumbImage {
@@ -91,4 +133,12 @@ class SlideTo: UISlider {
 		return super.thumbRect(forBounds: bounds, trackRect: subTrack, value: value)
 	}
 
+}
+
+extension Double {
+	var cgFloat: CGFloat { return CGFloat(self) }
+}
+
+extension FloatingPoint {
+	var radians: Self { return self * .pi / 180 }
 }
