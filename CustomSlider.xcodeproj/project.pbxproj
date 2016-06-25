@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		03481CBB9A2DB271E9D4C22E /* Pods_CustomSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB21A3635F398DE4ED9CCD6A /* Pods_CustomSlider.framework */; };
+		700989911D1F473500777A09 /* SlideToObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 700989901D1F473500777A09 /* SlideToObserver.swift */; };
 		70A1357D1D1E0ECD00C5D47F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A1357C1D1E0ECD00C5D47F /* AppDelegate.swift */; };
 		70A1357F1D1E0ECD00C5D47F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A1357E1D1E0ECD00C5D47F /* ViewController.swift */; };
 		70A135821D1E0ECD00C5D47F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 70A135801D1E0ECD00C5D47F /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		700989901D1F473500777A09 /* SlideToObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideToObserver.swift; sourceTree = "<group>"; };
 		70A135791D1E0ECD00C5D47F /* CustomSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		70A1357C1D1E0ECD00C5D47F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		70A1357E1D1E0ECD00C5D47F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -130,6 +132,7 @@
 				70A135851D1E0ECD00C5D47F /* LaunchScreen.storyboard */,
 				70A135881D1E0ECD00C5D47F /* Info.plist */,
 				70A135AA1D1E12D000C5D47F /* SlideTo.swift */,
+				700989901D1F473500777A09 /* SlideToObserver.swift */,
 			);
 			path = CustomSlider;
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				700989911D1F473500777A09 /* SlideToObserver.swift in Sources */,
 				70A1357F1D1E0ECD00C5D47F /* ViewController.swift in Sources */,
 				70A135AB1D1E12D000C5D47F /* SlideTo.swift in Sources */,
 				70A1357D1D1E0ECD00C5D47F /* AppDelegate.swift in Sources */,

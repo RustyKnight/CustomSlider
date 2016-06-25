@@ -26,6 +26,9 @@
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="image" keyPath="image" value="shutdown_filled_50"/>
                                     <userDefinedRuntimeAttribute type="string" keyPath="text" value="Slide to be awesome"/>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="textColor">
+                                        <color key="value" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="valueDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="IDH-zt-CpF"/>

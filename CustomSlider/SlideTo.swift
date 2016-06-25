@@ -9,6 +9,8 @@
 import UIKit
 
 class SlideTo: UISlider {
+	
+	var observer: SlideToObserver?
 
 	@IBInspectable var trackGap = 8.0 {
 		didSet {
@@ -80,13 +82,7 @@ class SlideTo: UISlider {
 		setup()
 	}
 	
-	override func prepareForInterfaceBuilder() {
-		super.prepareForInterfaceBuilder()
-		setup()
-	}
-	
 	internal func setup() {
-		textLabel.textColor = UIColor.red()
 		textLabel.translatesAutoresizingMaskIntoConstraints = false
 		addSubview(textLabel)
 		var constraints: [NSLayoutConstraint] = []
@@ -129,9 +125,12 @@ class SlideTo: UISlider {
 		                                              height: diameter),
 		                                       false,
 		                                       0.0)
-		let ctx = UIGraphicsGetCurrentContext()
-		print("ctx = \(ctx)")
-		UIColor.white().setFill()
+		
+		if let color = thumbTintColor {
+			color.setFill()
+		} else {
+			UIColor.white().setFill()
+		}
 		let center = diameter / 2.0.cgFloat
 		let path = UIBezierPath(arcCenter: CGPoint(x: center, y: center),
 		                        radius: diameter / 2.0.cgFloat,
@@ -195,6 +194,13 @@ class SlideTo: UISlider {
 			UIView.animate(withDuration: duration, animations: {
 				self.setValue(0.0, animated: true)
 			})
+			if let observer = observer {
+				observer.slideTo(self, didTrigger: false)
+			}
+		} else {
+			if let observer = observer {
+				observer.slideTo(self, didTrigger: true)
+			}
 		}
 	}
 	
@@ -209,7 +215,21 @@ class SlideTo: UISlider {
 		                      width: rect.width - (CGFloat(trackGap * 2) * 2.0),
 		                      height: height)
 		
+		updateViewAlpha()
+		if let observer = observer {
+			observer.slideTo(self, didChange: value)
+		}
+		
 		return super.thumbRect(forBounds: bounds, trackRect: subTrack, value: value)
+	}
+	
+	internal func updateViewAlpha() {
+		let count = subviews.count
+		if count > 0 {
+			for index in 0..<count - 1 {
+				subviews[index].alpha = CGFloat(1.0 - Double(value))
+			}
+		}
 	}
 
 }
