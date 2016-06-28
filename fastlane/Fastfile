@@ -35,9 +35,16 @@ platform :ios do
 		#tag_match_pattern: nil, # Optional, lets you search for a tag name that matches a glob(7) pattern
 		#match_lightweight_tag: false, # Optional, lets you ignore lightweight (non-annotated) tags when searching for the last tag
 		#merge_commit_filtering: 'include_merges'
-  )
-  puts(logs)
+	)
+  	puts(logs)
     puts(last_git_tag())
+    # Build number
+    puts('version = ' + get_version_number())
+    puts(increment_build_number())
+    # Version number x.x.x
+    puts(increment_version_number(bump_type: "patch"))
+    puts(increment_version_number(bump_type: "minor"))
+    puts(increment_version_number(bump_type: "major"))
   end
 
   # desc "Runs all the tests"
